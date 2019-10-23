@@ -336,7 +336,7 @@ class ZulipLDAPAuthBackendBase(ZulipAuthMixin, LDAPBackend):
             if is_valid_email(username):
                 result = find_ldap_users_by_email(username)
                 if result is None:
-                    return username
+                    raise ZulipLDAPExceptionOutsideDomain("Email %s does not found in LDAP domain" % username)
                 if len(result) == 1:
                     return result[0]._username
                 if len(result) > 1:
